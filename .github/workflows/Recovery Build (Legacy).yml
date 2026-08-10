@@ -93,6 +93,13 @@ jobs:
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         continue-on-error: true
 
+      - name: Install Java and Setup Environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-8-jdk python2 python-is-python2
+          sudo update-java-alternatives --set java-1.8.0-openjdk-amd64 || true
+          sudo ln -sf /usr/bin/python2 /usr/bin/python
+
       - name: Building recovery
         run: |
           source build/envsetup.sh
