@@ -70,18 +70,14 @@ jobs:
           repo sync -j$(nproc --all) --force-sync
         working-directory: workspace
 
-      - name: Install twrpdtgen
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install twrpdtgen
-
       - name: Generate Device Tree
         run: |
+          python3 -m pip install --upgrade pip twrpdtgen
           wget ${{ github.event.inputs.IMG_URL }}
           python3 ${GITHUB_WORKSPACE}/scripts/build.py -i *.img -o device
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         id: gdt
-
+        
       - name: Sync Device Dependencies
         run: |
           bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ steps.gdt.outputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
