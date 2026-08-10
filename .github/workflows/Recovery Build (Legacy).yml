@@ -69,22 +69,16 @@ jobs:
         run: |
           repo sync -j$(nproc --all) --force-sync
         working-directory: workspace
-
+        
       - name: Generate Device Tree
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user "twrpdtgen<3.0.0" sebaubuntu-libs
+          python3 -m pip install --user git+https://github.com/sebaubuntu/sebaubuntu-libs
+          python3 -m pip install --user "twrpdtgen<2.0.0"
           wget ${{ github.event.inputs.IMG_URL }}
           python3 ${GITHUB_WORKSPACE}/scripts/build.py -i *.img -o device
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         id: gdt
-      - name: Sync Device Dependencies
-        run: |
-          bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ steps.gdt.outputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
-          repo sync -j$(nproc --all)
-        working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-        continue-on-error: true
-
       - name: Set Swap Space
         uses: pierotofy/set-swap-space@master
         with:
