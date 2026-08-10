@@ -73,17 +73,12 @@ jobs:
       - name: Generate Device Tree
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user git+https://github.com/sebaubuntu/sebaubuntu-libs
-          python3 -m pip install --user "twrpdtgen<2.0.0"
+          python3 -m pip install --user twrpdtgen sebaubuntu-libs
           wget ${{ github.event.inputs.IMG_URL }}
           python3 ${GITHUB_WORKSPACE}/scripts/build.py -i *.img -o device
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         id: gdt
-      - name: Set Swap Space
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 12
-
+        
       - name: Switch to Python2
         run: |
           sudo apt-get update
