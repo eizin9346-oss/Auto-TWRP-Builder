@@ -73,12 +73,11 @@ jobs:
       - name: Generate Device Tree
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user "twrpdtgen<3.0.0"
+          python3 -m pip install --user "twrpdtgen<3.0.0" sebaubuntu-libs
           wget ${{ github.event.inputs.IMG_URL }}
           python3 ${GITHUB_WORKSPACE}/scripts/build.py -i *.img -o device
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
         id: gdt
-
       - name: Sync Device Dependencies
         run: |
           bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ steps.gdt.outputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
