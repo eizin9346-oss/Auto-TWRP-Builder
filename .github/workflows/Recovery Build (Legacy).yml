@@ -70,6 +70,11 @@ jobs:
           repo sync -j$(nproc --all) --force-sync
         working-directory: workspace
 
+      - name: Install twrpdtgen
+        run: |
+          pip3 install --upgrade pip
+          pip3 install twrpdtgen
+          
       - name: Generate Device Tree
         run: |
           wget ${{ github.event.inputs.IMG_URL }}
