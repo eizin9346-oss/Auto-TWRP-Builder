@@ -72,9 +72,9 @@ jobs:
 
       - name: Install twrpdtgen
         run: |
-          pip3 install --upgrade pip
-          pip3 install twrpdtgen
-          
+          python3 -m pip install --upgrade pip
+          python3 -m pip install twrpdtgen
+
       - name: Generate Device Tree
         run: |
           wget ${{ github.event.inputs.IMG_URL }}
