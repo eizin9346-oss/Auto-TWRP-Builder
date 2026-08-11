@@ -96,7 +96,7 @@ jobs:
       - name: Install Java and Setup Environment
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-8-jdk python2
+          sudo apt-get install -y openjdk-8-jdk python2 lib32stdc++6
           sudo update-java-alternatives --set java-1.8.0-openjdk-amd64 || true
           sudo ln -sf /usr/bin/python2 /usr/bin/python
           
