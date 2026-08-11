@@ -102,6 +102,8 @@ jobs:
           
       - name: Building recovery
         run: |
+          export CFLAGS="-Wno-error"
+          export CXXFLAGS="-Wno-error"
           source build/envsetup.sh
           export ALLOW_MISSING_DEPENDENCIES=true
           lunch ${{ steps.gdt.outputs.MAKEFILE_NAME }}-eng
