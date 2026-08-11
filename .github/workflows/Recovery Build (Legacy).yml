@@ -104,12 +104,12 @@ jobs:
         run: |
           export CFLAGS="-Wno-error"
           export CXXFLAGS="-Wno-error"
-          export KBUILD_CFLAGS="-w"
+          find external/busybox -type f \( -name "Makefile*" -o -name "*.mk" -o -name "Kbuild*" \) -exec sed -i 's/-Werror//g' {} +
           source build/envsetup.sh
           export ALLOW_MISSING_DEPENDENCIES=true
           lunch ${{ steps.gdt.outputs.MAKEFILE_NAME }}-eng
           make clean
-          make EXTRA_CFLAGS="-w" KBUILD_CFLAGS="-w" ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+          make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
         working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
 
